@@ -90,6 +90,61 @@ export function vehicleTools(client) {
                 return client.delete(`/vehicles/${args.id}`);
             },
         },
+        {
+            name: "upload_vehicle_photos",
+            description: "Adicionar fotos a um veiculo por URL. O sistema baixa as imagens, salva no storage e processa automaticamente (resize + WebP/JPEG). Maximo 20 fotos por veiculo.",
+            schema: z.object({
+                vehicle_id: z.number().describe("ID do veiculo"),
+                photos: z
+                    .array(z.object({
+                    url: z.string().url().describe("URL publica da imagem (jpeg, png ou webp)"),
+                    is_cover: z.boolean().optional().describe("Definir como foto de capa"),
+                }))
+                    .min(1)
+                    .max(20)
+                    .describe("Lista de fotos para upload"),
+            }),
+            handler: async (args) => {
+                return client.post(`/vehicles/${args.vehicle_id}/photos`, {
+                    photos: args.photos,
+                });
+            },
+        },
+        {
+            name: "delete_vehicle_photo",
+            description: "Remover uma foto especifica de um veiculo. Remove o arquivo original e todas as variantes processadas.",
+            schema: z.object({
+                vehicle_id: z.number().describe("ID do veiculo"),
+                photo_id: z.number().describe("ID da foto a remover"),
+            }),
+            handler: async (args) => {
+                return client.delete(`/vehicles/${args.vehicle_id}/photos/${args.photo_id}`);
+            },
+        },
+        {
+            name: "reorder_vehicle_photos",
+            description: "Reordenar as fotos de um veiculo. Envie os IDs das fotos na ordem desejada.",
+            schema: z.object({
+                vehicle_id: z.number().describe("ID do veiculo"),
+                order: z.array(z.number()).min(1).describe("Array de IDs das fotos na ordem desejada"),
+            }),
+            handler: async (args) => {
+                return client.post(`/vehicles/${args.vehicle_id}/photos/reorder`, {
+                    order: args.order,
+                });
+            },
+        },
+        {
+            name: "set_vehicle_cover_photo",
+            description: "Definir qual foto sera a capa (thumbnail principal) do veiculo.",
+            schema: z.object({
+                vehicle_id: z.number().describe("ID do veiculo"),
+                photo_id: z.number().describe("ID da foto que sera a capa"),
+            }),
+            handler: async (args) => {
+                return client.put(`/vehicles/${args.vehicle_id}/photos/${args.photo_id}/cover`);
+            },
+        },
     ];
 }
 //# sourceMappingURL=vehicles.js.map

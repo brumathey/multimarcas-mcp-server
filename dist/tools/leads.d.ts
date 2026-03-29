@@ -30,17 +30,17 @@ export declare function leadTools(client: MultimarcasClient): ({
     }, "strip", z.ZodTypeAny, {
         name: string;
         message?: string | undefined;
+        vehicle_id?: number | undefined;
         email?: string | undefined;
         phone?: string | undefined;
         source?: string | undefined;
-        vehicle_id?: number | undefined;
     }, {
         name: string;
         message?: string | undefined;
+        vehicle_id?: number | undefined;
         email?: string | undefined;
         phone?: string | undefined;
         source?: string | undefined;
-        vehicle_id?: number | undefined;
     }>;
     handler: (args: Record<string, unknown>) => Promise<unknown>;
 } | {

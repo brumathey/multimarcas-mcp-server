@@ -160,5 +160,74 @@ export declare function vehicleTools(client: MultimarcasClient): ({
         featured?: boolean | undefined;
     }>;
     handler: (args: Record<string, unknown>) => Promise<unknown>;
+} | {
+    name: string;
+    description: string;
+    schema: z.ZodObject<{
+        vehicle_id: z.ZodNumber;
+        photos: z.ZodArray<z.ZodObject<{
+            url: z.ZodString;
+            is_cover: z.ZodOptional<z.ZodBoolean>;
+        }, "strip", z.ZodTypeAny, {
+            url: string;
+            is_cover?: boolean | undefined;
+        }, {
+            url: string;
+            is_cover?: boolean | undefined;
+        }>, "many">;
+    }, "strip", z.ZodTypeAny, {
+        vehicle_id: number;
+        photos: {
+            url: string;
+            is_cover?: boolean | undefined;
+        }[];
+    }, {
+        vehicle_id: number;
+        photos: {
+            url: string;
+            is_cover?: boolean | undefined;
+        }[];
+    }>;
+    handler: (args: {
+        vehicle_id: number;
+        photos: Array<{
+            url: string;
+            is_cover?: boolean;
+        }>;
+    }) => Promise<unknown>;
+} | {
+    name: string;
+    description: string;
+    schema: z.ZodObject<{
+        vehicle_id: z.ZodNumber;
+        photo_id: z.ZodNumber;
+    }, "strip", z.ZodTypeAny, {
+        vehicle_id: number;
+        photo_id: number;
+    }, {
+        vehicle_id: number;
+        photo_id: number;
+    }>;
+    handler: (args: {
+        vehicle_id: number;
+        photo_id: number;
+    }) => Promise<unknown>;
+} | {
+    name: string;
+    description: string;
+    schema: z.ZodObject<{
+        vehicle_id: z.ZodNumber;
+        order: z.ZodArray<z.ZodNumber, "many">;
+    }, "strip", z.ZodTypeAny, {
+        vehicle_id: number;
+        order: number[];
+    }, {
+        vehicle_id: number;
+        order: number[];
+    }>;
+    handler: (args: {
+        vehicle_id: number;
+        order: number[];
+    }) => Promise<unknown>;
 })[];
 //# sourceMappingURL=vehicles.d.ts.map
