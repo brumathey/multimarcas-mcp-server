@@ -1,6 +1,6 @@
 {
   "name": "multimarcas-mcp-server",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "MCP server para Multimarcas - gerencie sua loja de veiculos com IA",
   "type": "module",
   "bin": {
