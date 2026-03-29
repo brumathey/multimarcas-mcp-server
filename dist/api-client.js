@@ -9,12 +9,19 @@ export class ApiError extends Error {
         this.name = "ApiError";
     }
     static formatMessage(status, body) {
+        const serverMsg = body.message || "";
         if (status === 401)
-            return "Token invalido ou expirado. Gere um novo token em Dashboard > API.";
+            return serverMsg
+                ? `Autenticacao falhou: ${serverMsg}`
+                : "Token invalido ou expirado. Gere um novo token em Dashboard > API.";
         if (status === 403)
-            return "Sem permissao para esta acao. Verifique seu role e permissions.";
+            return serverMsg
+                ? `Sem permissao: ${serverMsg}`
+                : "Sem permissao para esta acao. Verifique seu role e permissions.";
         if (status === 404)
-            return "Recurso nao encontrado.";
+            return serverMsg
+                ? `Nao encontrado: ${serverMsg}`
+                : "Recurso nao encontrado.";
         if (status === 429)
             return "Rate limit atingido. Aguarde alguns segundos e tente novamente.";
         if (status === 422 && body.errors) {
